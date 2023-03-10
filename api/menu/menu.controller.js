@@ -1,11 +1,11 @@
 const models = require("./../../models/index");
 const menu = models.menu;
 
-const express = require("express");
-const app = express();
 const multer = require("multer");
-const path = require("path");
+const express = require("express");
 const fs = require("fs");
+const path = require("path");
+const app = express();
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     cb(null, `image-${Date.now()}.png`);
-  },
+  }
 });
 
 const upload = multer({ storage: storage });
@@ -22,19 +22,19 @@ app.get("/", (req, res) => {
   menu
     .findAll({
       attributes: {
-        exclude: ["createdAt", "updatedAt"],
+        exclude: ["createdAt", "updatedAt"]
       },
       include: {
-        model: models.category_menu, 
-        as: 'categorys',
+        model: models.category_menu,
+        as: "categorys",
         attributes: {
-            exclude: ['createdAt', 'updatedAt']
+          exclude: ["createdAt", "updatedAt"]
         }
       }
     })
     .then(result => {
       res.json({
-        data: result,
+        data: result
       });
     })
     .catch(err => {
@@ -46,22 +46,22 @@ app.get("/:id", (req, res) => {
   menu
     .findOne({
       where: {
-        id: req.params.id,
+        id: req.params.id
       },
       attributes: {
-        exclude: ["createdAt", "updatedAt"],
+        exclude: ["createdAt", "updatedAt"]
       },
       include: {
-        model: models.category_menu, 
-        as: 'categorys',
+        model: models.category_menu,
+        as: "categorys",
         attributes: {
-            exclude: ['createdAt', 'updatedAt']
+          exclude: ["createdAt", "updatedAt"]
         }
       }
     })
     .then(result => {
       res.json({
-        data: result,
+        data: result
       });
     })
     .catch(err => {
@@ -69,21 +69,21 @@ app.get("/:id", (req, res) => {
     });
 });
 
-app.post("/", upload.single("gambar"), (req, res) => {
+app.post("/", upload.single("image"), (req, res) => {
   if (req.file) {
     const data = {
       name: req.body.name,
       category: req.body.category,
       description: req.body.description,
-      gambar: req.file.filename,
-      harga: req.body.harga,
+      image: req.file.filename,
+      harga: req.body.harga
     };
 
     menu
       .create(data)
       .then(result => {
         res.json({
-          data: req.body,
+          data: data
         });
       })
       .catch(err => {
@@ -94,14 +94,14 @@ app.post("/", upload.single("gambar"), (req, res) => {
       name: req.body.name,
       category: req.body.category,
       description: req.body.description,
-      harga: req.body.harga,
+      harga: req.body.harga
     };
 
     menu
       .create(data)
       .then(result => {
         res.json({
-          data: req.body,
+          data: data
         });
       })
       .catch(err => {
@@ -110,18 +110,18 @@ app.post("/", upload.single("gambar"), (req, res) => {
   }
 });
 
-app.put("/:id", upload.single("gambar"), async (req, res) => {
+app.put("/:id", upload.single("image"), async (req, res) => {
   if (req.file) {
     const data = {
       name: req.body.name,
       category: req.body.category,
       description: req.body.description,
-      gambar: req.file.filename,
-      harga: req.body.harga,
+      image: req.file.filename,
+      harga: req.body.harga
     };
 
     let results = await menu.findOne({
-      where: { id: req.params.id },
+      where: { id: req.params.id }
     });
     let oldFileName = results.image;
 
@@ -133,12 +133,12 @@ app.put("/:id", upload.single("gambar"), async (req, res) => {
     menu
       .update(data, {
         where: {
-          id: req.params.id,
-        },
+          id: req.params.id
+        }
       })
       .then(result => {
         res.json({
-          data: req.body,
+          data: data
         });
       })
       .catch(err => {
@@ -149,18 +149,18 @@ app.put("/:id", upload.single("gambar"), async (req, res) => {
       name: req.body.name,
       category: req.body.category,
       description: req.body.description,
-      harga: req.body.harga,
+      harga: req.body.harga
     };
 
     menu
       .update(data, {
         where: {
-          id: req.params.id,
-        },
+          id: req.params.id
+        }
       })
       .then(result => {
         res.json({
-          data: req.body,
+          data: data
         });
       })
       .catch(err => {
@@ -172,7 +172,7 @@ app.put("/:id", upload.single("gambar"), async (req, res) => {
 app.delete("/:id", async (req, res) => {
   try {
     let results = await menu.findOne({
-      where: { id: req.params.id },
+      where: { id: req.params.id }
     });
     let oldFileName = results.image;
 
@@ -184,12 +184,12 @@ app.delete("/:id", async (req, res) => {
     menu
       .destroy({
         where: {
-          id: req.params.id,
-        },
+          id: req.params.id
+        }
       })
       .then(result => {
         res.json({
-          message: "data was deleted",
+          message: "data was deleted"
         });
       })
       .catch(err => {
@@ -200,15 +200,14 @@ app.delete("/:id", async (req, res) => {
   }
 });
 
+app.get("/image/:image", (req, res) => {
+  let { image } = req.params;
+  fs.readFile(`./image/${image}`, (err, data) => {
+    res.writeHead(200, {
+      "Content-Type": "image/png"
+    });
+    res.end(data);
+  });
+});
 
-app.get('/image/:gambar', (req, res)=> {
-    let {gambar} = req.params
-    fs.readFile(`./image/${gambar}`, (err, data)=> {
-        res.writeHead(200, {
-            'Content-Type': 'image/png'
-        })
-        res.end(data)
-    })
-})
-
-module.exports = app
+module.exports = app;

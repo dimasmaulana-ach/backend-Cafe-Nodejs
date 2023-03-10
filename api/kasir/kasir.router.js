@@ -14,6 +14,6 @@ router.get('/:id', controllerGetKasirById)
 router.post('/', controllerAddKasir)
 router.put('/:id', controllerUpdateKasir)
 router.delete('/:id', controllerDeleteKasir)
-router.post('/', controllerLoginKasir)
+router.post('/login', controllerLoginKasir)
 
 module.exports = router

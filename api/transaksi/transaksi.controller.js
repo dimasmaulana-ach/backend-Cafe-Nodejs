@@ -34,7 +34,7 @@ module.exports = {
           },
           {
             model: models.detail_transaksi,
-            as: "details_transaksis",
+            as: "detail_transaksi",
             attributes: {
               exclude: ["createdAt", "updatedAt"]
             },
@@ -97,7 +97,7 @@ module.exports = {
           },
           {
             model: models.detail_transaksi,
-            as: "details_transaksis",
+            as: "detail_transaksi",
             attributes: {
               exclude: ["createdAt", "updatedAt"]
             },
@@ -152,7 +152,6 @@ module.exports = {
               }
             });
             let datas = {
-              id: uuid,
               id_transaksi: result.id,
               id_menu: d.id_menu,
               harga: getPrice.harga,
@@ -163,7 +162,7 @@ module.exports = {
             models.detail_transaksi
               .create(datas)
               .then(results => {
-                res.status(200).end();
+                res.status(200).end()
               })
               .catch(err => {
                 console.log(err);
@@ -181,7 +180,7 @@ module.exports = {
     transaksi
       .findOne({
         where: {
-          id: req.body.id
+          id: req.params.id
         }
       })
       .then(result => {

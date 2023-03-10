@@ -22,7 +22,7 @@ module.exports = {
       description: {
         type: Sequelize.TEXT
       },
-      gambar: {
+      image: {
         type: Sequelize.STRING
       },
       harga: {

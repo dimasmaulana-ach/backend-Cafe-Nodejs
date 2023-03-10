@@ -122,7 +122,7 @@ module.exports = {
                 }
             })
 
-            const match = await bcrypt.compare(kasirs.password, req.body.password)
+            const match = await bcrypt.compare(req.body.password, kasirs.password)
             if(!match) return res.status(400).json({message: "wrong password"})
 
             const kasirname = kasirs.name

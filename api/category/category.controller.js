@@ -1,4 +1,4 @@
-const models = require('./../../models/category_menu')
+const models = require('./../../models/index')
 const category = models.category_menu
 
 module.exports = {
