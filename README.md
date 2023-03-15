@@ -10,4 +10,4 @@ yarn install
 yarn start
 ```
 ### Database Table
-<img src="https://github.com/Dimas-Maulana-A/loginValidation-ReactNative/blob/main/image/ReactNativeLogo.png" alt="React Native Logo" />
+<img src="https://github.com/Dimas-Maulana-A/backend-Cafe-Nodejs/blob/main/image/table_db_cafe.jpg" alt="database table" />
