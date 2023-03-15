@@ -131,7 +131,7 @@ module.exports = {
             const signs = jwt.sign({kasirname, kasiruname}, process.env.TOKEN)
             
             res.json({
-                data: kasirs,
+                datas: kasirs,
                 token: signs
             })
         } catch (error) {

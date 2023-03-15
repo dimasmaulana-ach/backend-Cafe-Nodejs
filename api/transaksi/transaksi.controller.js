@@ -135,7 +135,7 @@ module.exports = {
       id_kasir: req.body.id_kasir,
       id_meja: req.body.id_meja,
       nama_pelanggan: req.body.nama_pelanggan,
-      status: "waiting",
+      status: "on process",
       metode_pembayaran: req.body.metode_pembayaran
     };
     transaksi
@@ -162,7 +162,7 @@ module.exports = {
             models.detail_transaksi
               .create(datas)
               .then(results => {
-                res.status(200).end()
+                res.status(200).end();
               })
               .catch(err => {
                 console.log(err);
@@ -184,37 +184,31 @@ module.exports = {
         }
       })
       .then(result => {
-        if (result.status === "on process" || result.status === "success") {
-          res.status(400).json({
-            message: "data cannot deleted"
-          });
-        } else {
-          models.detail_transaksi
-            .destroy({
-              where: {
-                id_transaksi: req.params.id
-              }
-            })
-            .then(result => {
-              transaksi
-                .destroy({
-                  where: {
-                    id: req.params.id
-                  }
-                })
-                .then(results => {
-                  res.json({
-                    message: "data was deleted"
-                  });
-                })
-                .catch(err => {
-                  console.log(err);
+        models.detail_transaksi
+          .destroy({
+            where: {
+              id_transaksi: req.params.id
+            }
+          })
+          .then(result => {
+            transaksi
+              .destroy({
+                where: {
+                  id: req.params.id
+                }
+              })
+              .then(results => {
+                res.json({
+                  message: "data was deleted"
                 });
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        }
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          })
+          .catch(err => {
+            console.log(err);
+          });
       })
       .catch(err => {
         console.log(err);

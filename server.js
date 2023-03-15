@@ -31,4 +31,7 @@ app.use('/api/transaksi', Transaksi)
 const Details = require('./api/detail/detail.router')
 app.use('/api/details', Details)
 
+const Report = require('./api/report/report.router')
+app.use('/api/report', Report)
+
 app.listen(8080, ()=> console.log('server run at port 8080'))

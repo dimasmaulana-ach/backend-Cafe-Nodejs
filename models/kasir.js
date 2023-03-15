@@ -16,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
         as: 'kasir_transaksi'
       })
 
+      this.hasMany(models.bug_report, {
+        foreignKey: "id",
+        as: "kasir_report"
+      })
+
       this.belongsTo(models.role, {
         foreignKey: 'role',
         as: 'roles'

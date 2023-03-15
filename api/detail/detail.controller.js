@@ -96,44 +96,33 @@ module.exports = {
   },
   controllerEditDetails: async (req, res) => {
     try {
-      const getStatus = await models.transaksi.findOne({
+      const getPrice = await models.menu.findOne({
         where: {
-          id: req.body.transaksi_id
+          id: req.body.id_menu
         }
       });
-      if (getStatus.status === "on process" || getStatus.status === "success") {
-        res.json({
-          message: "data cannot updated"
-        });
-      } else {
-        const getPrice = await models.menu.findOne({
-          where: {
-            id: req.body.id_menu
-          }
-        });
-        const data = {
-          id_transaksi: req.body.id_transaksi,
-          id_menu: req.body.id_menu,
-          harga: getPrice.harga,
-          total_harga: getPrice.harga * req.body.total_barang,
-          total_barang: req.body.total_barang
-        };
+      const data = {
+        id_transaksi: req.body.id_transaksi,
+        id_menu: req.body.id_menu,
+        harga: getPrice.harga,
+        total_harga: getPrice.harga * req.body.total_barang,
+        total_barang: req.body.total_barang
+      };
 
-        details
-          .updated(data, {
-            where: {
-              id: req.params.id
-            }
-          })
-          .then(result => {
-            res.json({
-              data: req.body
-            });
-          })
-          .catch(err => {
-            console.log(err);
+      details
+        .updated(data, {
+          where: {
+            id: req.params.id
+          }
+        })
+        .then(result => {
+          res.json({
+            data: req.body
           });
-      }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     } catch (error) {
       console.log(error);
     }
@@ -147,39 +136,26 @@ module.exports = {
       })
       .then(async result => {
         try {
-          const getStatus = await models.transaksi.findOne({
-            where: {
-              id_transaksi: result.id_transaksi
-            }
-          });
-          if (
-            getStatus.status === "on process" ||
-            getStatus.status === "success"
-          ) {
-            res.json({
-              message: "data cannot deleted"
+          details
+            .destroy({
+              where: {
+                id: req.params.id
+              }
+            })
+            .then(results => {
+              res.json({
+                message: "data was deleted"
+              });
+            })
+            .catch(err => {
+              console.log(err);
             });
-          } else {
-            details.destroy({
-                where: {
-                    id: req.params.id
-                }
-            })
-            .then(results=> {
-                res.json({
-                    message: "data was deleted"
-                })
-            })
-            .catch(err=> {
-                console.log(err)
-            })
-          }
         } catch (error) {
-            console.log(error)
+          console.log(error);
         }
       })
-      .catch(err=> {
-        console.log(err)
-      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 };
