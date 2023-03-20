@@ -101,20 +101,26 @@ module.exports = {
       });
   },
   controllerDeleteKasir: (req, res) => {
-    kasir
-      .destroy({
-        where: {
-          id: req.params.id
-        }
-      })
-      .then(result => {
-        res.json({
-          message: "data was deleted"
+    try {
+      kasir
+        .destroy({
+          where: {
+            id: req.params.id
+          }
+        })
+        .then(result => {
+          res.json({  
+            message: "data was deleted"
+          });
+        })
+        .catch(err => {
+          console.log(err);
         });
-      })
-      .catch(err => {
-        console.log(err);
+    } catch (error) {
+      res.status(400).json({
+        message: "data cant deleted"
       });
+    }
   },
   controllerLoginKasir: async (req, res) => {
     try {
@@ -149,15 +155,20 @@ module.exports = {
   controllerChangePassword: (req, res) => {
     kasir
       .findOne({
-        where: {id: req.params.id}
+        where: { id: req.params.id }
       })
       .then(async result => {
-        const match = await bcrypt.compare(req.body.oldpassword, result.password);
+        const match = await bcrypt.compare(
+          req.body.oldpassword,
+          result.password
+        );
         if (!match) return res.status(400).json({ message: "wrong password" });
         else {
           try {
+            const salt = await bcrypt.genSalt();
+            const hashPass = await bcrypt.hash(req.body.newpassword, salt);
             const data = {
-              password: req.body.newpassword
+              password: hashPass
             };
             kasir.update(data, {
               where: { id: req.params.id }
@@ -175,10 +186,10 @@ module.exports = {
       });
   },
 
-  controllerUpdateNameUsername: (req, res)=> {
+  controllerUpdateNameUsername: (req, res) => {
     const data = {
       name: req.body.name,
-      username: req.body.username,
+      username: req.body.username
     };
     kasir
       .update(data, {
