@@ -7,7 +7,8 @@ const {
     controllerUpdateKasir,
     controllerDeleteKasir,
     controllerLoginKasir,
-    controllerChangePassword
+    controllerChangePassword,
+    controllerUpdateNameUsername
 } = require('./kasir.controller')
 
 router.get('/', controllerGetKasir)
@@ -16,6 +17,7 @@ router.post('/', controllerAddKasir)
 router.put('/:id', controllerUpdateKasir)
 router.delete('/:id', controllerDeleteKasir)
 router.post('/login', controllerLoginKasir)
-router.patch('/', controllerChangePassword)
+router.post('/:id', controllerChangePassword)
+router.patch('/:id', controllerUpdateNameUsername)
 
 module.exports = router

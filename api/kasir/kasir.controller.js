@@ -148,9 +148,11 @@ module.exports = {
 
   controllerChangePassword: (req, res) => {
     kasir
-      .findByPk(req.body.id)
+      .findOne({
+        where: {id: req.params.id}
+      })
       .then(async result => {
-        const match = await bcrypt.compare(req.body.password, result.password);
+        const match = await bcrypt.compare(req.body.oldpassword, result.password);
         if (!match) return res.status(400).json({ message: "wrong password" });
         else {
           try {
@@ -158,7 +160,7 @@ module.exports = {
               password: req.body.newpassword
             };
             kasir.update(data, {
-              where: { id: req.body.id }
+              where: { id: req.params.id }
             });
             res.json({
               message: "password change success"
@@ -170,6 +172,27 @@ module.exports = {
       })
       .catch(error => {
         console.log(error);
+      });
+  },
+
+  controllerUpdateNameUsername: (req, res)=> {
+    const data = {
+      name: req.body.name,
+      username: req.body.username,
+    };
+    kasir
+      .update(data, {
+        where: {
+          id: req.params.id
+        }
+      })
+      .then(result => {
+        res.json({
+          data: req.body
+        });
+      })
+      .catch(err => {
+        console.log(err);
       });
   }
 };
