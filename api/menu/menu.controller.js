@@ -196,7 +196,20 @@ app.delete("/:id", async (req, res) => {
         console.log(err);
       });
   } catch (error) {
-    console.log(err);
+    menu
+      .destroy({
+        where: {
+          id: req.params.id
+        }
+      })
+      .then(result => {
+        res.json({
+          message: "data was deleted"
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 });
 

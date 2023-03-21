@@ -135,7 +135,7 @@ module.exports = {
       id_kasir: req.body.id_kasir,
       id_meja: req.body.id_meja,
       nama_pelanggan: req.body.nama_pelanggan,
-      status: "on process",
+      status: "success",
       metode_pembayaran: req.body.metode_pembayaran
     };
     transaksi
