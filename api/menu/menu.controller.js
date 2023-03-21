@@ -216,6 +216,8 @@ app.delete("/:id", async (req, res) => {
 app.get("/image/:image", (req, res) => {
   let { image } = req.params;
   fs.readFile(`./image/${image}`, (err, data) => {
+    if (err)
+      return res.status(404).json({ message: "data not found"});
     res.writeHead(200, {
       "Content-Type": "image/png"
     });

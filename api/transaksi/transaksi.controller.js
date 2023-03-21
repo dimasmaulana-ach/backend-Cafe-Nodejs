@@ -135,7 +135,7 @@ module.exports = {
       id_kasir: req.body.id_kasir,
       id_meja: req.body.id_meja,
       nama_pelanggan: req.body.nama_pelanggan,
-      status: "success",
+      status: "on process",
       metode_pembayaran: req.body.metode_pembayaran
     };
     transaksi
@@ -176,6 +176,28 @@ module.exports = {
         console.log(err);
       });
   },
+
+  controllerEditStatusTransaksi: (req, res) => {
+    const data = {
+      status: "success"
+    };
+
+    transaksi
+      .update(data, {
+        where: {
+          id: req.params.id
+        }
+      })
+      .then(result => {
+        res.json({
+          message: "status was updated"
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
+
   controllerDeteleTransaksi: (req, res) => {
     transaksi
       .findOne({
