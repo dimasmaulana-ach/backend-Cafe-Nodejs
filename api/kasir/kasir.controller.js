@@ -109,7 +109,7 @@ module.exports = {
           }
         })
         .then(result => {
-          res.json({  
+          res.json({
             message: "data was deleted"
           });
         })
@@ -140,6 +140,19 @@ module.exports = {
       const kasiruname = kasirs.username;
 
       const signs = jwt.sign({ kasirname, kasiruname }, process.env.TOKEN);
+      const data = {
+        id_kasir: kasirs.id,
+        status: "log in"
+      };
+
+      models.log
+        .create(data)
+        .then(result => {
+          res.json({ message: "log save" });
+        })
+        .catch(err => {
+          console.log(err);
+        });
 
       res.json({
         datas: kasirs,

@@ -87,6 +87,28 @@ module.exports = {
             console.log(err)
         })
     },
+    controllerEditStatusReport:(req, res)=> {
+        report.findOne({
+            where: {id: req.params.id}
+        })
+        .then(result=> {
+            const data = {
+                message: !result.message
+            }
+            report.update(data, {
+                where: {id: req.params.id}
+            })
+            .then(results=> {
+                res.json({message: "status was updated"})
+            })
+            .catch(err=> {
+                console.log(err)
+            })
+        })
+        .catch(err=> {
+            console.log(err)
+        })
+    },
     controllerDeleteReport: (req, res)=> {
         report.destroy({
             where: {

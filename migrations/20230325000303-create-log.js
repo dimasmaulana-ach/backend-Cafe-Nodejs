@@ -2,15 +2,12 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('bug_report', {
+    await queryInterface.createTable('log', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
-      },
-      tgl_report: {
-        type: Sequelize.DATE
       },
       id_kasir: {
         type: Sequelize.INTEGER,
@@ -20,10 +17,7 @@ module.exports = {
         }
       },
       status: {
-        type: Sequelize.BOOLEAN
-      },
-      message: {
-        type: Sequelize.TEXT
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -36,6 +30,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('bug_report');
+    await queryInterface.dropTable('log');
   }
 };
