@@ -54,7 +54,8 @@ module.exports = {
         const data = {
             tgl_report : new Date().toJSON(),
             id_kasir: id_kasir,
-            message: message
+            message: message,
+            status: false
         }
         report.create(data)
         .then(result=> {
@@ -93,7 +94,7 @@ module.exports = {
         })
         .then(result=> {
             const data = {
-                message: !result.message
+                status: !result.status
             }
             report.update(data, {
                 where: {id: req.params.id}
