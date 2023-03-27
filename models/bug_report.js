@@ -11,15 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.kasir, {
-        foreignKey: "id_kasir",
-        as: "reports"
-      })
     }
   }
   bug_report.init({
     tgl_report: DataTypes.DATE,
-    id_kasir: DataTypes.INTEGER,
+    kasir: DataTypes.STRING,
+    role: DataTypes.INTEGER,
     message: DataTypes.TEXT,
     status: DataTypes.BOOLEAN
   }, {

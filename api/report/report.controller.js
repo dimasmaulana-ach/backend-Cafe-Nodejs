@@ -6,13 +6,6 @@ module.exports = {
         report.findAll({
             attributes: {
                 exclude: ["createdAt", "updatedAt"]
-            },
-            include: {
-                model: models.kasir,
-                as: "reports",
-                attributes: {
-                    exclude: ["createdAt", "updatedAt", "password"]
-                }
             }
         })
         .then(result=> {
@@ -31,13 +24,6 @@ module.exports = {
             },
             attributes: {
                 exclude: ["createdAt", "updatedAt"]
-            },
-            include: {
-                model: models.kasir,
-                as: "reports",
-                attributes: {
-                    exclude: ["createdAt", "updatedAt", "password"]
-                }
             }
         })
         .then(result=> {
@@ -50,12 +36,13 @@ module.exports = {
         })
     },
     controllerAddReport: (req, res)=> {
-        const {id_kasir, message} = req.body
+        const {kasir, message} = req.body
         const data = {
             tgl_report : new Date().toJSON(),
-            id_kasir: id_kasir,
+            kasir: kasir,
             message: message,
-            status: false
+            status: false,
+            role: req.body.role
         }
         report.create(data)
         .then(result=> {
@@ -68,11 +55,12 @@ module.exports = {
         })
     },
     controllerEditReport: (req, res)=> {
-        const {id_kasir, message} = req.body
+        const {kasir, message} = req.body
         const data = {
             tgl_report : new Date().toJSON(),
-            id_kasir: id_kasir,
-            message: message
+            kasir: kasir,
+            message: message,
+            role: req.body.role
         }
         report.update(data, {
             where: {

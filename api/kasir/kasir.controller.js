@@ -141,7 +141,8 @@ module.exports = {
 
       const signs = jwt.sign({ kasirname, kasiruname }, process.env.TOKEN);
       const data = {
-        id_kasir: kasirs.id,
+        kasir: kasirs.username,
+        role: kasirs.role,
         status: "log in"
       };
 

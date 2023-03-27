@@ -4,6 +4,6 @@ const router = express.Router()
 const { controllerLogOut, controllerGetLog } = require('./log.controller')
 
 router.get('/', controllerGetLog)
-router.post('/:id', controllerLogOut)
+router.post('/', controllerLogOut)
 
 module.exports = router

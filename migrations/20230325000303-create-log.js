@@ -9,12 +9,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id_kasir: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "kasir",
-          key: "id"
-        }
+      kasir: {
+        type: Sequelize.STRING,
+      },
+      role: {
+        type: Sequelize.INTEGER
       },
       status: {
         type: Sequelize.STRING

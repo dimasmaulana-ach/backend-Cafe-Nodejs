@@ -6,20 +6,6 @@ module.exports = {
     logs.findAll({
       attributes: {
         exclude: ['updatedAt']
-      },
-      include: {
-        model: models.kasir,
-        as: "logs",
-        attributes: {
-          exclude: ['createdAt', 'updatedAt', 'password']
-        },
-        include: {
-          model: models.role,
-          as: "roles",
-          attributes: {
-            exclude: ['createdAt', 'updatedAt']
-          }
-        }
       }
     })
     .then(result=> {
@@ -31,10 +17,12 @@ module.exports = {
       console.log(err)
     })
   },
+
   controllerLogOut: (req, res) => {
     const data = {
-      id_kasir: req.params.id,
-      status: "log out"
+      kasir: req.body.kasir,
+      status: "log out",
+      role: req.body.role
     };
     logs
       .create(data)

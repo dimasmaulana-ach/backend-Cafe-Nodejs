@@ -12,12 +12,11 @@ module.exports = {
       tgl_report: {
         type: Sequelize.DATE
       },
-      id_kasir: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "kasir",
-          key: "id"
-        }
+      kasir: {
+        type: Sequelize.STRING
+      },
+      role: {
+        type: Sequelize.INTEGER
       },
       status: {
         type: Sequelize.BOOLEAN
