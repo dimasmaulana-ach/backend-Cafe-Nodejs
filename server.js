@@ -37,4 +37,7 @@ app.use('/api/report', Report)
 const Logs = require('./api/log/log.router')
 app.use('/api/logs', Logs)
 
+const DataDetails = require('./api/data_details/data_details.router')
+app.use('/api/checkout', DataDetails)
+
 app.listen(8080, ()=> console.log('server run at port 8080'))
