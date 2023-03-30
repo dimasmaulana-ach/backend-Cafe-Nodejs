@@ -66,7 +66,6 @@ module.exports = {
           });
         
         const data = {
-            id_kasir: id_kasir,
             id_menu: id_menu,
             total_harga: getPrice.harga * total_barang,
             total_barang:total_barang
