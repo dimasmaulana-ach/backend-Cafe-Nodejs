@@ -56,7 +56,7 @@ module.exports = {
     },
     controllerEditDetails: async(req, res)=> {
         const {
-            id_kasir, id_menu, total_barang
+            id_menu, total_barang
         }= req.body
         
         const getPrice = await models.menu.findOne({
