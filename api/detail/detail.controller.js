@@ -68,14 +68,14 @@ module.exports = {
       });
   },
   controllerAddDetails: async (req, res) => {
-    const id = uuidv4();
+    // const id = uuidv4();
     const getPrice = await models.menu.findOne({
       where: {
         id: req.body.id_menu
       }
     });
     const data = {
-      id: id,
+      // id: id,
       id_transaksi: req.body.id_transaksi,
       id_menu: req.body.id_menu,
       harga: getPrice.harga,

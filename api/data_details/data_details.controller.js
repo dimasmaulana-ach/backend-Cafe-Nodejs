@@ -27,14 +27,21 @@ module.exports = {
             console.log(err)
         })
     },
-    controllerAddDetails: (req, res)=> {
+    controllerAddDetails: async (req, res)=> {
         const {
-            id_kasir, id_menu, total_harga, total_barang
+            id_kasir, id_menu, total_barang
         }= req.body
+
+        const getPrice = await models.menu.findOne({
+            where: {
+              id: id_menu
+            }
+          });
+        
         const data = {
             id_kasir: id_kasir,
             id_menu: id_menu,
-            total_harga: total_harga,
+            total_harga: getPrice.harga * total_barang,
             total_barang:total_barang
         }
         details.create(data)
@@ -47,14 +54,21 @@ module.exports = {
             console.log(err)
         })
     },
-    controllerEditDetails: (req, res)=> {
+    controllerEditDetails: async(req, res)=> {
         const {
-            id_kasir, id_menu, total_harga, total_barang
+            id_kasir, id_menu, total_barang
         }= req.body
+        
+        const getPrice = await models.menu.findOne({
+            where: {
+              id: id_menu
+            }
+          });
+        
         const data = {
             id_kasir: id_kasir,
             id_menu: id_menu,
-            total_harga: total_harga,
+            total_harga: getPrice.harga * total_barang,
             total_barang:total_barang
         }
         details.update(data, {
