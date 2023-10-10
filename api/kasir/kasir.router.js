@@ -10,12 +10,13 @@ const {
     controllerChangePassword,
     controllerUpdateNameUsername
 } = require('./kasir.controller')
+const Auth = require('../../middleware')
 
-router.get('/', controllerGetKasir)
-router.get('/:id', controllerGetKasirById)
-router.post('/', controllerAddKasir)
-router.put('/:id', controllerUpdateKasir)
-router.delete('/:id', controllerDeleteKasir)
+router.get('/', Auth, controllerGetKasir)
+router.get('/:id', Auth, controllerGetKasirById)
+router.post('/', Auth, controllerAddKasir)
+router.put('/:id', Auth, controllerUpdateKasir)
+router.delete('/:id', Auth, controllerDeleteKasir)
 router.post('/login', controllerLoginKasir)
 router.post('/:id', controllerChangePassword)
 router.patch('/:id', controllerUpdateNameUsername)
